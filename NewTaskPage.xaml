@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Chapter7.View.Exercise5.NewTaskPage"
+             xmlns:TaskSource="clr-namespace:Chapter7.ViewModel.Execise5"
+             Title="NewTaskPage">
+
+    <ContentPage.BindingContext>
+        <TaskSource:AddTaskViewModel/>
+    </ContentPage.BindingContext>
+
+    <NavigationPage.TitleView>
+        <Label Text="Create New Task"
+               FontSize="Large"
+               FontAttributes="Bold"
+               TextColor="White"
+               VerticalOptions="Center"/>
+    </NavigationPage.TitleView>
+
+    <ScrollView>
+        <StackLayout Margin="20">
+            <Label Text="Task Name"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,10"/>
+            <Frame Padding="10,8">
+                <Entry FontSize="Subtitle"
+                       Text="{Binding TaskName}"/>
+            </Frame>
+            <Label Text="Description"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,25,0,10"/>
+            <Frame Padding="10,8"
+                   HeightRequest="125">
+                <Editor FontSize="Subtitle"
+                        Text="{Binding Description}"/>
+            </Frame>
+            <Label Text="Completion Date"
+                   FontAttributes="Bold"
+                   FontSize="Medium"
+                   Margin="0,25,0,10"/>
+            <Frame Padding="10,8">
+                <DatePicker FontSize="Subtitle"
+                            Date="{Binding CompletionDate}"/>
+            </Frame>
+            <Grid ColumnDefinitions="*,*"
+                  RowDefinitions="auto,auto"
+                  ColumnSpacing="20">
+                <Label Text="Start Time"
+                       FontAttributes="Bold"
+                       FontSize="Medium"
+                       Margin="0,25,0,10"/>
+                <Frame Padding="10,8"
+                       Grid.Row="1">
+                    <TimePicker FontSize="Subtitle"
+                                Time="{Binding StartTime}"/>
+                </Frame>
+                <Label Text="End Time"
+                       FontAttributes="Bold"
+                       FontSize="Medium"
+                       Margin="0,25,0,10"
+                       Grid.Column="1"/>
+                <Frame Padding="10,8"
+                       Grid.Row="1"
+                       Grid.Column="1">
+                    <TimePicker FontSize="Subtitle"
+                                Time="{Binding EndTime}"/>
+                </Frame>
+            </Grid>
+            <Button Text="Create Task"
+                    TextColor="White"
+                    FontAttributes="Bold"
+                    BackgroundColor="DarkCyan"
+                    FontSize="Medium"
+                    VerticalOptions="EndAndExpand"
+                    CornerRadius="15"
+                    Command="{Binding AddTaskCommand}"/>
+        </StackLayout>
+    </ScrollView>
+    
+</ContentPage>

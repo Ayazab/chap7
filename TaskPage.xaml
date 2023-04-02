@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Chapter7.View.Exercise5.TaskPage"
+             xmlns:TaskSource="clr-namespace:Chapter7.ViewModel.Execise5"
+             Title="TaskPage">
+
+    <ContentPage.BindingContext>
+        <TaskSource:TaskViewModel/>
+    </ContentPage.BindingContext>
+    <ContentPage.Resources>
+        <DataTemplate x:Key="TaskTemplate">
+            <SwipeView>
+                <SwipeView.LeftItems>
+                    <SwipeItems>
+                        <SwipeItemView CommandParameter="{Binding}"
+                                   Command="{Binding Source={x:Reference TaskCollectionView}, Path=BindingContext.EditTaskCommand}">
+                            <BoxView Color="Green"
+                                     HeightRequest="50"
+                                     WidthRequest="50"/>
+                        </SwipeItemView>
+                    </SwipeItems>
+                </SwipeView.LeftItems>
+                <SwipeView.RightItems>
+                    <SwipeItemView CommandParameter="{Binding}"
+                                   Command="{Binding Source={x:Reference TaskCollectionView}, Path=BindingContext.DeleteTaskCommand}">
+                        <Border StrokeShape="RoundRectangle 25"
+                                HeightRequest="50"
+                                WidthRequest="50"
+                                BackgroundColor="Red">
+                            <Image Source="bin"
+                                   HeightRequest="25"
+                                   WidthRequest="25"/>
+                        </Border>
+                    </SwipeItemView>
+                </SwipeView.RightItems>
+                <Border Stroke="Black"
+                    StrokeShape="RoundRectangle 10"
+                        Margin="0,7">
+                    <Grid RowDefinitions="auto,auto,auto"
+                      ColumnDefinitions="*,auto"
+                      Padding="10">
+                        <Label Text="{Binding TaskName}"
+                           FontSize="Medium"
+                           Padding="0,5"/>
+                        <Label Text="{Binding CompletionDate, StringFormat='Completion Date: {0: dd/MM/yyyy}'}"
+                           FontSize="Small"
+                           Grid.Row="1"/>
+                        <Label Grid.Row="2">
+                            <Label.FormattedText>
+                                <FormattedString>
+                                    <Span Text="Completion Time: "/>
+                                    <Span Text="{Binding StartTime, StringFormat='{0: hh:mm tt}'}"/>
+                                    <Span Text=" - "/>
+                                    <Span Text="{Binding EndTime, StringFormat='{0} hh:mm tt'}"/>
+                                </FormattedString>
+                            </Label.FormattedText>
+                        </Label>
+                        <Image Source="backarrow"
+                           HeightRequest="30"
+                           WidthRequest="30"
+                           Grid.RowSpan="3"
+                           Grid.Column="1"
+                           Margin="10,0"/>
+                    </Grid>
+                </Border>
+            </SwipeView>
+        </DataTemplate>
+    </ContentPage.Resources>
+    <ScrollView>
+        <Grid Padding="10">
+                
+                <CollectionView x:Name="TaskCollectionView"
+                        ItemsSource="{Binding TaskDetails}"
+                        ItemTemplate="{StaticResource TaskTemplate}"
+                                IsVisible="{Binding IsVisible}"
+                        EmptyView="No Task Available">
+
+                </CollectionView>
+                <ImageButton Source="cyanplus"
+                     Aspect="AspectFill"
+                     HeightRequest="50"
+                     WidthRequest="50"
+                     Clicked="ImageButton_Clicked"
+                     HorizontalOptions="End"
+                     VerticalOptions="End"/>
+            </Grid>
+
+    </ScrollView>
+</ContentPage>
